@@ -1,8 +1,8 @@
 build-frontend:
-	cd frontend && pnpm build
+	pnpm --dir frontend build
 
 build:
-	go build -o bin/tiny-todo main.go
+	make build-frontend && go build -o bin/tiny-todo main.go
 
 run:
 	make build-frontend && go run main.go serve

@@ -1,6 +1,6 @@
 import PreactRouter from 'preact-router'
 import AsyncRoute from 'preact-async-route'
-import Todos from '../routes/todos'
+import Todos from 'src/routes/todos'
 
 import type { FunctionalComponent } from 'preact'
 

@@ -1,9 +1,8 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/lukecarr/tiny-todo/internal/server"
+	"github.com/moducate/x/osx"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +12,7 @@ func MakeServeCmd() *cobra.Command {
 		Short: "Serves tiny-todo's server",
 		Run: func(cmd *cobra.Command, args []string) {
 			srv := server.New("")
-			srv.Listen(fmt.Sprintf(":3000"))
+			srv.Listen(osx.Getenv("TINY_TODO_ADDR", ":3000"))
 		},
 	}
 }

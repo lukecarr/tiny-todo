@@ -1,5 +1,6 @@
-import type { FunctionalComponent } from 'preact'
 import { useEffect } from 'preact/hooks'
+
+import type { FunctionalComponent } from 'preact'
 
 const Todos: FunctionalComponent = () => {
   useEffect(() => {
