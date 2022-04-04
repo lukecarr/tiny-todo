@@ -1,7 +1,6 @@
 before:
   hooks:
     - go mod tidy
-    - make build-frontend
 
 builds:
   - env:
