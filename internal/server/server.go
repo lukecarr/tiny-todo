@@ -42,11 +42,11 @@ func New(dsn string) *Server {
 	return srv
 }
 
-func (this *Server) Listen(addr string) {
+func (s *Server) Listen(addr string) {
 	go func() {
 		log.Printf("tiny-todo server now listening on %s\n", addr)
 
-		if err := this.Fiber.Listen(addr); err != nil && errors.Is(err, http.ErrServerClosed) {
+		if err := s.Fiber.Listen(addr); err != nil && errors.Is(err, http.ErrServerClosed) {
 			log.Println("tiny-todo server closed")
 		}
 	}()
@@ -58,7 +58,7 @@ func (this *Server) Listen(addr string) {
 
 	log.Println("Shutting down tiny-todo server...")
 
-	if err := this.Fiber.Shutdown(); err != nil {
+	if err := s.Fiber.Shutdown(); err != nil {
 		log.Fatalf("An error occurred during shutdown: %s\n", err)
 	}
 }
