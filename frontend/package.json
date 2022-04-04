@@ -7,13 +7,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "preact": "^10.5.15",
-    "preact-async-route": "^2.2.1",
-    "preact-router": "^4.0.1"
+    "preact": "10.7.0",
+    "preact-async-route": "2.2.1",
+    "preact-router": "4.0.1"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.1.5",
-    "typescript": "^4.5.4",
-    "vite": "^2.9.0"
+    "@preact/preset-vite": "2.2.0",
+    "typescript": "4.6.3",
+    "vite": "2.9.1"
   }
 }
