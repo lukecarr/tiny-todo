@@ -1,13 +1,6 @@
 package main
 
-import (
-	"embed"
-
-	"github.com/lukecarr/tiny-todo/cmd"
-)
-
-//go:embed frontend/dist
-var Static embed.FS
+import "github.com/lukecarr/tiny-todo/cmd"
 
 func main() {
 	cmd.Execute()
