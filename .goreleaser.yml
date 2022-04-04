@@ -4,7 +4,7 @@ before:
 
 builds:
   - env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1
     binary: tiny-todo
     ldflags:
       - -s -w -X github.com/lukecarr/tiny-todo/internal/info.Version={{.Tag}} -X github.com/lukecarr/tiny-todo/internal/info.Commit={{.FullCommit}} -X github.com/lukecarr/tiny-todo/internal/info.Date={{.Date}}
