@@ -10,7 +10,7 @@ RUN pnpm build
 
 FROM golang:1.18-alpine AS go-builder
 
-RUN apk update && apk add --no-cache git ca-certificates tzdata && update-ca-certificates
+RUN apk update && apk add --no-cache git ca-certificates tzdata build-base && update-ca-certificates
 
 ENV USER=tiny
 ENV UID=10001
@@ -34,7 +34,7 @@ RUN go mod verify
 COPY . .
 COPY --from=node-builder /build/dist ./frontend/dist/
 
-ENV CGO_ENABLED=0
+ENV CGO_ENABLED=1
 ENV GOOS=linux
 ENV GOARCH=amd64
 RUN go build -ldflags='-w -s -extldflags "-static"' -a -o /usr/bin/tiny-todo main.go
