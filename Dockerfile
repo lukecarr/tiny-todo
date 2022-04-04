@@ -1,4 +1,4 @@
-FROM node:16.14.2 AS node-builder
+FROM node:17.8.0 AS node-builder
 
 RUN npm i -g pnpm@6.32.3
 
