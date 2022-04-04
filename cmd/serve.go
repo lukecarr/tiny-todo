@@ -11,7 +11,7 @@ func MakeServeCmd() *cobra.Command {
 		Use:   "serve",
 		Short: "Serves tiny-todo's server",
 		Run: func(cmd *cobra.Command, args []string) {
-			srv := server.New("")
+			srv := server.New(osx.Getenv("TINY_TODO_DSN", ":memory:"))
 			srv.Listen(osx.Getenv("TINY_TODO_ADDR", ":3000"))
 		},
 	}

@@ -10,7 +10,8 @@
   "dependencies": {
     "preact": "10.7.0",
     "preact-async-route": "2.2.1",
-    "preact-router": "4.0.1"
+    "preact-router": "4.0.1",
+    "swr": "1.2.2"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.2.0",

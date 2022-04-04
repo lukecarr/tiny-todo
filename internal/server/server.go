@@ -11,7 +11,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/lukecarr/tiny-todo/frontend"
+	sql "github.com/lukecarr/tiny-todo/internal/db"
 	"github.com/lukecarr/tiny-todo/internal/env"
+	"github.com/lukecarr/tiny-todo/internal/routes"
 )
 
 type Server struct {
@@ -32,7 +34,14 @@ func New(dsn string) *Server {
 		Fiber: newFiber(),
 	}
 
-	srv.Env = env.New()
+	db, err := sql.New(dsn)
+	if err != nil {
+		log.Fatalf("tiny-todo failed to connect to SQLite: %s\n", err)
+	}
+
+	srv.Env = env.New(db)
+
+	routes.Version(srv.Env, srv.Fiber.Group("/api/version"))
 
 	srv.Fiber.Use("/", filesystem.New(filesystem.Config{
 		Root:       http.FS(frontend.Static),
