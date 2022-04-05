@@ -10,6 +10,8 @@ func Version(e *env.Env, r fiber.Router) {
 	r.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"version": info.Version,
+			"date":    info.Date,
+			"commit":  info.Commit,
 		})
 	})
 }
