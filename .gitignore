@@ -16,3 +16,6 @@
 
 # Build output
 bin
+
+# Databases
+*.db

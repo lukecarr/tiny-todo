@@ -2,22 +2,28 @@ package cmd
 
 import (
 	"github.com/lukecarr/tiny-todo/internal/db"
+	"github.com/lukecarr/x/stringsx"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
 
 func MakeMigrateCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "migrate",
+		Use:   "migrate <DSN>",
 		Short: "Performs tiny-todo's SQLite database migrations",
 		Run: func(cmd *cobra.Command, args []string) {
+			if len(args) != 1 {
+				log.Fatal().Str("Hint", "./tiny-todo migrate <DSN>").Msg("Please supply an SQLite connection string as a CLI argument!")
+			}
+
 			n, err := db.Migrate(args[0])
 
 			if err != nil {
-				cmd.PrintErrf("%s\n", err)
+				log.Fatal().Err(err).Msg("Could not perform migrations on database!")
 			} else if n == 0 {
-				cmd.Println("The provided SQLite database is already up to date!")
+				log.Warn().Msg("The provided SQLite database is already up to date!")
 			} else {
-				cmd.Printf("Applied %d migrations successfully!\n", n)
+				log.Info().Msgf("Applied %d %s successfully!", n, stringsx.Plural("migration", n))
 			}
 		},
 	}

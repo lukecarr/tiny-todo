@@ -2,7 +2,6 @@ package server
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -14,6 +13,7 @@ import (
 	sql "github.com/lukecarr/tiny-todo/internal/db"
 	"github.com/lukecarr/tiny-todo/internal/env"
 	"github.com/lukecarr/tiny-todo/internal/routes"
+	"github.com/rs/zerolog/log"
 )
 
 type Server struct {
@@ -36,12 +36,13 @@ func New(dsn string) *Server {
 
 	db, err := sql.New(dsn)
 	if err != nil {
-		log.Fatalf("tiny-todo failed to connect to SQLite: %s\n", err)
+		log.Fatal().Err(err).Msg("Couldn't establish database connection!")
 	}
 
 	srv.Env = env.New(db)
 
 	routes.Version(srv.Env, srv.Fiber.Group("/api/version"))
+	routes.Task(srv.Env, srv.Fiber.Group("/api/tasks"))
 
 	srv.Fiber.Use("/", filesystem.New(filesystem.Config{
 		Root:       http.FS(frontend.Static),
@@ -53,10 +54,10 @@ func New(dsn string) *Server {
 
 func (s *Server) Listen(addr string) {
 	go func() {
-		log.Printf("tiny-todo server now listening on %s\n", addr)
+		log.Info().Str("Addr", addr).Msg("Server now listening!")
 
 		if err := s.Fiber.Listen(addr); err != nil && errors.Is(err, http.ErrServerClosed) {
-			log.Println("tiny-todo server closed")
+			log.Info().Msg("Server closed.")
 		}
 	}()
 
@@ -65,9 +66,9 @@ func (s *Server) Listen(addr string) {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	log.Println("Shutting down tiny-todo server...")
+	log.Info().Msg("Shutting down server...")
 
 	if err := s.Fiber.Shutdown(); err != nil {
-		log.Fatalf("An error occurred during shutdown: %s\n", err)
+		log.Fatal().Err(err).Msg("Encountered an error during shutdown!")
 	}
 }

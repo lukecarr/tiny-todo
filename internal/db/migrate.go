@@ -1,18 +1,19 @@
 package db
 
 import (
+	"database/sql"
 	"embed"
 	"log"
 
-	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3"
 	migrate "github.com/rubenv/sql-migrate"
 )
 
+//go:embed migrations/*.sql
 var migrations embed.FS
 
 func Migrate(dsn string) (int, error) {
-	conn, err := sqlx.Connect("sqlite3", dsn)
+
+	conn, err := sql.Open(DIALECT, dsn)
 
 	if err != nil {
 		return 0, err
@@ -21,7 +22,7 @@ func Migrate(dsn string) (int, error) {
 	defer func() {
 		if conn != nil {
 			if err := conn.Close(); err != nil {
-				log.Fatalf("%s\n", err)
+				log.Fatalf("Error encountered closing database connection: %s\n", err)
 			}
 		}
 	}()
@@ -31,5 +32,5 @@ func Migrate(dsn string) (int, error) {
 		Root:       "migrations",
 	}
 
-	return migrate.Exec(conn.DB, "sqlite3", migrations, migrate.Up)
+	return migrate.Exec(conn, DIALECT, migrations, migrate.Up)
 }

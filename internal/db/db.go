@@ -2,15 +2,17 @@ package db
 
 import (
 	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3"
 )
+
+const DIALECT = "sqlite3"
+const MEMORY_DSN = ":memory:"
 
 type DB struct {
 	Sqlx *sqlx.DB
 }
 
 func New(dsn string) (*DB, error) {
-	conn, err := sqlx.Connect("sqlite3", dsn)
+	conn, err := sqlx.Connect(DIALECT, dsn)
 
 	if err != nil {
 		return nil, err
