@@ -1,19 +1,6 @@
-import useSWR from 'swr'
 import { useEffect } from 'preact/hooks'
 
 import type { FunctionalComponent } from 'preact'
-
-const fetcher = (url: string) => fetch(url).then(r => r.json())
-
-const Version: FunctionalComponent = () => {
-  const { data, error } = useSWR<{
-    version: string
-  }>('/api/version', fetcher)
-
-  if (error) return <p>Failed to load tiny-todo version!</p>
-  if (!data) return <p>Version: loading...</p>
-  return <p>Version: {data.version}</p>
-}
 
 const About: FunctionalComponent = () => {
   useEffect(() => {
@@ -40,8 +27,6 @@ const About: FunctionalComponent = () => {
           <li>Form handling: react-hook-form</li>
         </ul>
       </ul>
-      
-      <Version />
     </>
   )
 }
