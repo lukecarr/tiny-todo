@@ -6,3 +6,6 @@ build-backend:
 
 run:
 	make build-frontend && go run main.go serve
+
+run-prod:
+	make build-frontend && make build-backend && ./bin/tiny-todo serve
