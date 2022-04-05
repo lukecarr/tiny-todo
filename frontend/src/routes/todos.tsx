@@ -29,7 +29,7 @@ type NewTaskInputs = {
 }
 
 const NewTask: FunctionalComponent = () => {
-  const { register, handleSubmit } = useForm<NewTaskInputs>()
+  const { register, handleSubmit, reset } = useForm<NewTaskInputs>()
   const create: SubmitHandler<NewTaskInputs> = async ({ name }) => {
     await $fetch('/api/tasks', {
       method: 'POST',
@@ -39,6 +39,7 @@ const NewTask: FunctionalComponent = () => {
     })
 
     mutate('/api/tasks')
+    reset()
   }
 
   return <form onSubmit={handleSubmit(create)} class="mb-8">
