@@ -43,7 +43,7 @@ const NewTask: FunctionalComponent = () => {
   }
 
   return <form onSubmit={handleSubmit(create)} class="mb-8">
-    <input placeholder="Use tiny-todo everyday!" {...register('name')} />
+    <input placeholder="Use tiny-todo everyday!" {...register('name', { required: true })} />
     <input type="submit" value="Create task" />
   </form>
 }
