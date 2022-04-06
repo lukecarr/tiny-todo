@@ -1,7 +1,9 @@
 package info
 
+import "time"
+
 var (
-	Version = "undefined"
-	Date    = "undefined"
-	Commit  = "undefined"
+	Version = "dev build"
+	Date    = time.Now().Format(time.RFC3339)
+	Commit  = "0000000"
 )
