@@ -8,12 +8,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "immer": "9.0.12",
     "ohmyfetch": "0.4.15",
     "preact": "10.7.1",
     "preact-async-route": "2.2.1",
     "preact-router": "4.0.1",
     "react-hook-form": "7.29.0",
-    "swr": "1.2.2"
+    "swr": "1.2.2",
+    "use-immer": "0.6.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "2.2.0",

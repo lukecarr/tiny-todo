@@ -1,10 +1,20 @@
-import { useState } from 'preact/hooks'
+import produce from 'immer'
+import { useEffect } from 'preact/hooks'
+import { DraftFunction, Updater, useImmer } from 'use-immer'
 
-export function useLocalStorage<T = any>(key: string, initialValue: T): [T, (value: T) => void] {
+/**
+ * Hook for accessing and manipulating local storage, with support for an
+ * initial value.
+ * 
+ * @param key The local storage item's key (preferably lowerCamelCase).
+ * @param initialValue The initial value of the local storage item.
+ * @returns The value of the local storage item, and a setter method.
+ */
+export function useLocalStorage<T = any>(key: string, initialValue: T): [T, Updater<T>] {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === "undefined") {
+  const [storedValue, setStoredValue] = useImmer<T>(() => {
+    if (typeof window === 'undefined') {
       return initialValue
     }
 
@@ -20,24 +30,17 @@ export function useLocalStorage<T = any>(key: string, initialValue: T): [T, (val
     }
   })
 
-  // Return a wrapped version of useState's setter function that ...
-  // ... persists the new value to localStorage.
-  const setValue = (value: T) => {
+  useEffect(() => {
     try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value
-      // Save state
-      setStoredValue(valueToStore)
       // Save to local storage
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore))
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(storedValue))
       }
     } catch (error) {
       // A more advanced implementation would handle the error case
       console.log(error)
     }
-  };
+  }, [storedValue])
 
-  return [storedValue, setValue]
+  return [storedValue, setStoredValue]
 }
