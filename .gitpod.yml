@@ -1,3 +1,6 @@
 tasks:
-  - before: curl https://get.volta.sh | bash && ~/.volta/bin/volta install node@16.14.2 pnpm@6.32.3
+  - before: |
+      curl https://get.volta.sh | bash
+      ~/.volta/bin/volta install node@16.14.2 pnpm@6.32.3
+      go install honnef.co/go/tools/cmd/staticcheck@latest
     init: pnpm install --dir frontend
