@@ -26,7 +26,7 @@ const BuildInfo: FunctionalComponent = () => {
       </a>
     </p>
     <p class="text-xs">Built at: {data.date}</p>
-    <p class="text-xs">
+    {data.commit !== 'undefined' && <p class="text-xs">
       <a
         class="font-semibold underline underline-dotted hover:underline-solid"
         href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`}
@@ -35,7 +35,7 @@ const BuildInfo: FunctionalComponent = () => {
       >
         Commit: {data.commit.slice(0, 7)}
       </a>
-    </p>
+    </p>}
   </div>
 }
 
