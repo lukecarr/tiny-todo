@@ -19,7 +19,7 @@ const BuildInfo: FunctionalComponent = () => {
     </p>}
     <p class="text-xs">Built at: {data.date}</p>
     {data.commit && <p class="text-xs">
-      <Link href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`} newTab>{data.commit}</Link>
+      <Link href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`} newTab>{data.commit.slice(0, 7)}</Link>
     </p>}
   </div>
 }
