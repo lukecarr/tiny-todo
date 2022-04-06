@@ -3,4 +3,7 @@ tasks:
       curl https://get.volta.sh | bash
       ~/.volta/bin/volta install node@16.14.2 pnpm@6.32.3
       go install honnef.co/go/tools/cmd/staticcheck@latest
-    init: pnpm install --dir frontend
+    init: |
+      pnpm --dir frontend install
+      pnpm --dir frontend build
+    command: go run main.go serve
