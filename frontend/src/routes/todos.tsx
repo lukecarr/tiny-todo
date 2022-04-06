@@ -5,8 +5,6 @@ import useSWR, { mutate } from 'swr'
 
 import type { FunctionalComponent } from 'preact'
 
-const fetcher = (url: string) => fetch(url).then(r => r.json())
-
 type Task = {
   id: number
   name: string
@@ -14,7 +12,7 @@ type Task = {
 }
 
 const Tasks: FunctionalComponent = () => {
-  const { data, error } = useSWR<{ tasks: Task[] }>('/api/tasks', fetcher)
+  const { data, error } = useSWR<{ tasks: Task[] }>('/tasks')
 
   if (error) return <p>Failed to load tasks!</p>
   if (!data?.tasks) return <p>Loading tasks...</p>
@@ -38,7 +36,7 @@ const NewTask: FunctionalComponent = () => {
       },
     })
 
-    mutate('/api/tasks')
+    mutate('/tasks')
     reset()
   }
 

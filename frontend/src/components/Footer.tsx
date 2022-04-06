@@ -3,14 +3,12 @@ import useSWR from 'swr'
 import type { FunctionalComponent } from 'preact'
 import Link from './Link'
 
-const fetcher = (url: string) => fetch(url).then(r => r.json())
-
 const BuildInfo: FunctionalComponent = () => {
   const { data, error } = useSWR<{
     version?: string
     date: string
     commit?: string
-  }>('/api/version', fetcher)
+  }>('/version')
 
   if (error) return null
   if (!data) return null
