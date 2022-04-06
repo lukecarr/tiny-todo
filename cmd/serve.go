@@ -13,7 +13,7 @@ func MakeServeCmd() *cobra.Command {
 		Use:   "serve",
 		Short: "Starts tiny-todo's server",
 		Run: func(cmd *cobra.Command, args []string) {
-			dsn := osx.Getenv("TINY_TODO_DSN", db.MEMORY_DSN)
+			dsn := osx.Getenv("SQLITE_DB", "")
 
 			if dsn == db.MEMORY_DSN {
 				if _, err := db.Migrate(dsn); err != nil {
@@ -22,7 +22,7 @@ func MakeServeCmd() *cobra.Command {
 			}
 
 			srv := server.New(dsn)
-			srv.Listen(osx.Getenv("TINY_TODO_ADDR", ":3000"))
+			srv.Listen(osx.Getenv("ADDR", ":3000"))
 		},
 	}
 }

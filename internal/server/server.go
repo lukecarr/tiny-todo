@@ -32,14 +32,25 @@ func newFiber() *fiber.App {
 func New(dsn string) *Server {
 	srv := &Server{
 		Fiber: newFiber(),
+		Env:   env.New(),
 	}
 
-	db, err := sql.New(dsn)
-	if err != nil {
-		log.Fatal().Err(err).Msg("Couldn't establish database connection!")
-	}
+	if dsn == "" {
+		// In-memory mode
+		log.Warn().
+			Str("Hint", "SQLITE_DB=todo.db ./tiny-todo serve").
+			Msg("Launching in in-memory mode as 'SQLITE_DB' environment variable wasn't set. Data will be lost on shutdown!")
 
-	srv.Env = env.New(db)
+		srv.Env.Services = env.NewInMemoryServices()
+	} else {
+		db, err := sql.New(dsn)
+
+		if err != nil {
+			log.Fatal().Err(err).Msg("Couldn't establish connection with SQLite!")
+		}
+
+		srv.Env.Services = env.NewSqlServices(db)
+	}
 
 	routes.Version(srv.Env, srv.Fiber.Group("/api/version"))
 	routes.Task(srv.Env, srv.Fiber.Group("/api/tasks"))

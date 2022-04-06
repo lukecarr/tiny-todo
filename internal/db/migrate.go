@@ -12,7 +12,6 @@ import (
 var migrations embed.FS
 
 func Migrate(dsn string) (int, error) {
-
 	conn, err := sql.Open(DIALECT, dsn)
 
 	if err != nil {

@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/lukecarr/tiny-todo/internal/db"
+	"github.com/lukecarr/x/osx"
 	"github.com/lukecarr/x/stringsx"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -9,14 +10,16 @@ import (
 
 func MakeMigrateCmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "migrate <DSN>",
+		Use:   "migrate",
 		Short: "Performs tiny-todo's SQLite database migrations",
 		Run: func(cmd *cobra.Command, args []string) {
-			if len(args) != 1 {
-				log.Fatal().Str("Hint", "./tiny-todo migrate <DSN>").Msg("Please supply an SQLite connection string as a CLI argument!")
+			dsn := osx.Getenv("SQLITE_DB", "")
+
+			if dsn == "" {
+				log.Fatal().Str("Hint", "SQLITE_DB=tiny-todo.db ./tiny-todo migrate").Msg("Please supply an SQLite database path as an environment variable (SQLITE_DB)!")
 			}
 
-			n, err := db.Migrate(args[0])
+			n, err := db.Migrate(dsn)
 
 			if err != nil {
 				log.Fatal().Err(err).Msg("Could not perform migrations on database!")
