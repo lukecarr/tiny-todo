@@ -10,15 +10,22 @@ import (
 
 func Version(e *env.Env, r fiber.Router) {
 	r.Get("/", func(c *fiber.Ctx) error {
+		resp := fiber.Map{}
+
+		if info.Version != "undefined" {
+			resp["version"] = info.Version
+		}
+
 		date := info.Date
 		if date == "undefined" {
 			date = time.Now().Format(time.RFC3339)
 		}
+		resp["date"] = date
 
-		return c.JSON(fiber.Map{
-			"version": info.Version,
-			"date":    date,
-			"commit":  info.Commit,
-		})
+		if info.Commit != "undefined" {
+			resp["commit"] = info.Commit
+		}
+
+		return c.JSON(resp)
 	})
 }

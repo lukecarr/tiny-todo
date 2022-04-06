@@ -6,16 +6,16 @@ const fetcher = (url: string) => fetch(url).then(r => r.json())
 
 const BuildInfo: FunctionalComponent = () => {
   const { data, error } = useSWR<{
-    version: string
+    version?: string
     date: string
-    commit: string
+    commit?: string
   }>('/api/version', fetcher)
 
   if (error) return null
   if (!data) return null
 
   return <div class="text-gray-700 text-sm font-mono text-right">
-    {data.version !== 'undefined' && <p>
+    {data.version && <p>
       <a
         class="font-semibold underline underline-dotted hover:underline-solid"
         href={`https://github.com/lukecarr/tiny-todo/releases/tag/${data.version}`}
@@ -26,7 +26,7 @@ const BuildInfo: FunctionalComponent = () => {
       </a>
     </p>}
     <p class="text-xs">Built at: {data.date}</p>
-    {data.commit !== 'undefined' && <p class="text-xs">
+    {data.commit && <p class="text-xs">
       <a
         class="font-semibold underline underline-dotted hover:underline-solid"
         href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`}
