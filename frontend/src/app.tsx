@@ -9,9 +9,9 @@ import Welcome from 'src/components/Welcome'
 import type { FunctionalComponent } from 'preact'
 
 const Layout: FunctionalComponent = () => {
-  return <div class="min-h-screen flex flex-col">
+  return <div flex="~ col" min-h="screen">
     <Header />
-    <main class="container max-w-screen-md my-8 flex-1">
+    <main m="y-8" flex="1" container="~" max-w="screen-md">
       <Welcome />
       <Router />
     </main>

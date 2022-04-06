@@ -6,7 +6,8 @@ type Props = {
 
 const Link: FunctionalComponent<JSX.HTMLAttributes<HTMLAnchorElement> & Props> = ({ newTab, children, ...props }) => {
   return <a
-    class="font-semibold underline underline-dotted hover:underline-solid"
+    font="semibold"
+    underline="~ dotted hover:solid"
     {...(newTab && { target: '_blank', rel: 'noopener' })}
     {...props}
   >

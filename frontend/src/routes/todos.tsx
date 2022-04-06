@@ -42,11 +42,25 @@ const NewTask: FunctionalComponent = () => {
 
   return <form onSubmit={handleSubmit(create)} class="mb-8 space-y-4">
     <input
-      class="block border-gray-200 border-1 w-full px-4 py-2 rounded-sm focus:border-gray-400 focus:outline-none"
+      block="~"
+      border="gray-200 focus:gray-400 1"
+      w="full"
+      p="x-4 y-2"
+      rounded="sm"
+      outline="focus:none"
       placeholder="Use tiny-todo everyday!"
       {...register('name', { required: true })}
     />
-    <input class="bg-gray-700 text-white px-3 py-1 font-bold hover:bg-black cursor-pointer rounded-sm" type="submit" value="Create task" />
+    <input
+      bg="gray-700 hover:black"
+      text="white"
+      p="x-3 y-1"
+      font="bold"
+      cursor="pointer"
+      rounded="sm"
+      type="submit"
+      value="Create task"
+    />
   </form>
 }
 

@@ -13,20 +13,20 @@ const BuildInfo: FunctionalComponent = () => {
   if (error) return null
   if (!data) return null
 
-  return <div class="text-gray-700 text-sm font-mono text-right">
+  return <div text="gray-700 sm right" font="mono">
     {data.version && <p>
       <Link href={`https://github.com/lukecarr/tiny-todo/releases/tag/${data.version}`} newTab>{data.version}</Link>
     </p>}
-    <p class="text-xs">Built at: {data.date}</p>
-    {data.commit && <p class="text-xs">
+    <p text="xs">Built at: {data.date}</p>
+    {data.commit && <p text="xs">
       <Link href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`} newTab>{data.commit.slice(0, 7)}</Link>
     </p>}
   </div>
 }
 
 const Footer: FunctionalComponent = () => {
-  return <footer class="border-t-1 border-gray-400 py-8">
-    <div class="container max-w-screen-md flex justify-between items-center">
+  return <footer border="gray-400 t-1" p="y-8">
+    <div container="~" max-w="screen-md" flex="~" justify="between" items="center">
       <p>Made with ❤ by <Link href="https://github.com/lukecarr" newTab>Luke Carr</Link></p>
       <BuildInfo />
     </div>
