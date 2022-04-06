@@ -15,7 +15,7 @@ const BuildInfo: FunctionalComponent = () => {
   if (!data) return null
 
   return <div class="text-gray-700 text-sm font-mono text-right">
-    <p>
+    {data.version !== 'undefined' && <p>
       <a
         class="font-semibold underline underline-dotted hover:underline-solid"
         href={`https://github.com/lukecarr/tiny-todo/releases/tag/${data.version}`}
@@ -24,7 +24,7 @@ const BuildInfo: FunctionalComponent = () => {
       >
         {data.version}
       </a>
-    </p>
+    </p>}
     <p class="text-xs">Built at: {data.date}</p>
     {data.commit !== 'undefined' && <p class="text-xs">
       <a
