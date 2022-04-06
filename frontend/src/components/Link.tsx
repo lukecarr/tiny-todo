@@ -1,4 +1,4 @@
-import type { FunctionalComponent } from 'preact'
+import type { FunctionalComponent, JSX } from 'preact'
 
 type Props = {
   newTab?: boolean

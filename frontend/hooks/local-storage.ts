@@ -39,7 +39,7 @@ export function useLocalStorage<T = any>(key: string, initialValue: T): [T, Upda
       // A more advanced implementation would handle the error case
       console.log(error)
     }
-  }, [storedValue])
+  }, [key, storedValue])
 
   return [storedValue, setStoredValue]
 }
