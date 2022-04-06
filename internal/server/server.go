@@ -12,6 +12,7 @@ import (
 	"github.com/lukecarr/tiny-todo/frontend"
 	sql "github.com/lukecarr/tiny-todo/internal/db"
 	"github.com/lukecarr/tiny-todo/internal/env"
+	"github.com/lukecarr/tiny-todo/internal/middleware"
 	"github.com/lukecarr/tiny-todo/internal/routes"
 	"github.com/rs/zerolog/log"
 )
@@ -26,6 +27,10 @@ func newFiber() *fiber.App {
 		AppName:               "tiny-todo",
 		DisableStartupMessage: true,
 	})
+
+	f.Use(middleware.RequestID())
+	f.Use(middleware.Logger())
+
 	return f
 }
 
