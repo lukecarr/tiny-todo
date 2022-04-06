@@ -1,6 +1,5 @@
-import produce from 'immer'
 import { useEffect } from 'preact/hooks'
-import { DraftFunction, Updater, useImmer } from 'use-immer'
+import { Updater, useImmer } from 'use-immer'
 
 /**
  * Hook for accessing and manipulating local storage, with support for an
