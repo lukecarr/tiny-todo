@@ -36,7 +36,7 @@ jobs:
           context: .
           push: true
           build-args: |
-            BUILD_DATE:${{ steps.build_date_gen.outputs.build_date }}
-            BUILD_COMMIT:${{ github.sha }}
-            BUILD_VERSION:nightly
+            BUILD_DATE=${{ steps.build_date_gen.outputs.build_date }}
+            BUILD_COMMIT=${{ github.sha }}
+            BUILD_VERSION=nightly
           labels: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:nightly
