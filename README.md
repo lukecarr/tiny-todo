@@ -31,3 +31,8 @@ You can find a list of all image tags [here](https://github.com/lukecarr/tiny-to
 ### Examples
 
 We also curate a number of examples for running tiny-todo in the [examples directory](examples)!
+
+
+## License
+
+tiny-todo is distributed under the [Apache 2.0](LICENSE) license.
