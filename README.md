@@ -34,15 +34,11 @@ You can find a list of all image tags [here](https://github.com/lukecarr/tiny-to
 
 This starts the tiny-todo server.
 
-By default, the server will listen on `:3000`; this can be changed by setting the `ADDR` environment variable.
-
 > You might see a warning about "Launching in in-memory mode" when running this command. Please read [Data persistence](#data-persistence) for more information.
 
 ### `migrate`
 
 This performs the necessary SQLite migrations.
-
-When running this command, you must set the `SQLITE_DB` environment variable to the path of an SQLite `.db` file (it will be created if missing).
 
 ## Data persistence
 
@@ -57,6 +53,26 @@ To ensure that you're aware of tiny-todo's data persistence behaviour, a warning
 ```txt
 11:44AM WRN Launching in in-memory mode as 'SQLITE_DB' environment variable wasn't set. Data will be lost on shutdown! Hint="SQLITE_DB=todo.db ./tiny-todo serve"
 ```
+
+## Environment variables
+
+### `ADDR`
+
+Indicates the address that tiny-todo will listen on.
+
+By default, this is `:3000`.
+
+### `SQLITE_DB`
+
+The path of the SQLite database file to use for storing persistent data.
+
+If not set, tiny-todo will launch in an "in-memory mode", and data will not persist across restarts.
+
+### `LOG_LEVEL`
+
+Sets the level of logs that will be displayed when launching tiny-todo.
+
+By default, this is `info`. It can be one of `panic`, `fatal`, `error`, `warn`, `info`, `debug`, or `trace`.
 
 ## Examples
 
