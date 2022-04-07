@@ -2,15 +2,9 @@ import { useEffect } from 'preact/hooks'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import useSWR, { mutate } from 'swr'
 
-import { createTask } from 'src/lib/task'
+import { createTask, Task } from 'src/lib/task'
 
 import type { FunctionalComponent } from 'preact'
-
-type Task = {
-  id: number
-  name: string
-  complete: boolean
-}
 
 const Tasks: FunctionalComponent = () => {
   const { data, error } = useSWR<{ tasks: Task[] }>('/tasks')
@@ -41,10 +35,21 @@ const SubmitBtn: FunctionalComponent = () => <input
 const NewTask: FunctionalComponent = () => {
   const { register, handleSubmit, reset } = useForm<NewTaskInputs>()
   
+  /**
+   * Attempts to create a new task, and then mutates the SWR cache and resets
+   * the form inputs.
+   * 
+   * @param task The new task to create.
+   */
   const create: SubmitHandler<NewTaskInputs> = async ({ name }) => {
-    await createTask({ name })
-    mutate('/tasks')
-    reset()
+    try {
+      await createTask({ name })
+      mutate('/tasks')
+      reset()
+    } catch (err) {
+      // TODO: better error handling (UI toasts/alerts?)
+      console.error(err)
+    }
   }
 
   return <form onSubmit={handleSubmit(create)} class="mb-8 space-y-4">
@@ -67,12 +72,10 @@ const Todos: FunctionalComponent = () => {
     document.title = 'tiny-todo'
   }, [])
   
-  return (
-    <>
-      <NewTask />
-      <Tasks />
-    </>
-  )
+  return <>
+    <NewTask />
+    <Tasks />
+  </>
 }
 
 export default Todos
