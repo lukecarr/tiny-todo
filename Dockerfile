@@ -37,7 +37,10 @@ COPY --from=node-builder /build/dist ./frontend/dist/
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 ENV GOARCH=amd64
-RUN go build -ldflags='-w -s -extldflags "-static"' -a -o /usr/bin/tiny-todo main.go
+ARG BUILD_VERSION
+ARG BUILD_COMMIT
+ARG BUILD_DATE
+RUN go build -ldflags="-w -s -extldflags '-static' -X github.com/lukecarr/tiny-todo/internal/info.Version=${BUILD_VERSION} -X github.com/lukecarr/tiny-todo/internal/info.Commit=${BUILD_COMMIT} -X github.com/lukecarr/tiny-todo/internal/info.Date=${BUILD_DATE}" -a -o /usr/bin/tiny-todo main.go
 
 FROM scratch
 

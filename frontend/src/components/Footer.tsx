@@ -15,12 +15,12 @@ const BuildInfo: FunctionalComponent = () => {
 
   return <div text="gray-700 sm right" font="mono">
     {data.version && <p>
-      <Link href={`https://github.com/lukecarr/tiny-todo/releases/tag/${data.version}`} newTab>{data.version}</Link>
+      <Link href={`https://github.com/lukecarr/tiny-todo/releases/tag/${data.version}`} newTab>
+        {data.version}
+        {data.commit && <Link href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`} newTab>{' '}({data.commit.slice(0, 7)})</Link>}
+        </Link>
     </p>}
     <p text="xs">Built at: {data.date}</p>
-    {data.commit && <p text="xs">
-      <Link href={`https://github.com/lukecarr/tiny-todo/commit/${data.commit}`} newTab>{data.commit.slice(0, 7)}</Link>
-    </p>}
   </div>
 }
 
