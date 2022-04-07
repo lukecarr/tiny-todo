@@ -5,6 +5,7 @@
 ## Requirements
 
 * Docker 1.13.0+
+* The `DOMAIN` environment variable set to the FQDN that you'd like to access tiny-todo at.
 
 ## Getting Started
 
@@ -14,8 +15,6 @@ Download the [docker-compose.yml](docker-compose.yml) configuration file and pas
 DOMAIN=example.com docker-compose -f /path/to/docker-compose.yml up -d
 ```
 
-Make sure to set the `DOMAIN` environment variable to the domain you'd like to serve tiny-todo on. Caddy will automatically provision HTTPS certificates!
-
 > The `-d` flag is passed to docker-compose so the containers are started in the background (detached).
 
-🎉 **You now have tiny-todo running on ports 80 and 443, serving HTTPS traffic to your provided domain!**
+🎉 **You now have tiny-todo running on ports 80 and 443, serving HTTPS traffic from your configured domain!**
