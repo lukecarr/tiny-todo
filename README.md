@@ -27,3 +27,7 @@ docker run -d -p 3000:3000 ghcr.io/lukecarr/tiny-todo:latest
 ```
 
 You can find a list of all image tags [here](https://github.com/lukecarr/tiny-todo/pkgs/container/tiny-todo/versions).
+
+### Examples
+
+We also curate a number of examples for running tiny-todo in the [examples directory](examples)!

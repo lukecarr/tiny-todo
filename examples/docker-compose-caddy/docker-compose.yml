@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  tiny-todo:
+    image: ghcr.io/lukecarr/tiny-todo:latest
+    restart: unless-stopped
+    expose:
+      - '3000'
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    command: caddy reverse-proxy --from ${DOMAIN} --to tiny-todo:3000
+
+volumes:
+  caddy_data:
+    external: true
+  caddy_config: {}
