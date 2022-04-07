@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  tiny-todo:
+    image: ghcr.io/lukecarr/tiny-todo:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - sqlite_data:/data
+    environment:
+      - SQLITE_DB=/data/tiny-todo.db
+
+volumes:
+  sqlite_data: {}

@@ -18,6 +18,5 @@ services:
     command: caddy reverse-proxy --from ${DOMAIN} --to tiny-todo:3000
 
 volumes:
-  caddy_data:
-    external: true
+  caddy_data: {}
   caddy_config: {}
