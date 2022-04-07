@@ -32,6 +32,9 @@ You can find a list of all image tags [here](https://github.com/lukecarr/tiny-to
 
 We also curate a number of examples for running tiny-todo in the [examples directory](examples)!
 
+## Screenshot
+
+![Screenshot](https://user-images.githubusercontent.com/24438483/162187159-0ca6fdb3-7d03-4533-9731-9f1375462212.png)
 
 ## License
 
