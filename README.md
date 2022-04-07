@@ -82,6 +82,10 @@ We curate a multitude of examples for running tiny-todo in the [examples directo
 
 ![Screenshot](https://user-images.githubusercontent.com/24438483/162187159-0ca6fdb3-7d03-4533-9731-9f1375462212.png)
 
+## Versioning
+
+tiny-todo uses [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html).
+
 ## License
 
 tiny-todo is distributed under the [Apache 2.0](LICENSE) license.
