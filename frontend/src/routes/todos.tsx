@@ -1,7 +1,8 @@
-import { $fetch } from 'ohmyfetch'
 import { useEffect } from 'preact/hooks'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import useSWR, { mutate } from 'swr'
+
+import { createTask } from 'src/lib/task'
 
 import type { FunctionalComponent } from 'preact'
 
@@ -26,16 +27,22 @@ type NewTaskInputs = {
   name: string
 }
 
+const SubmitBtn: FunctionalComponent = () => <input
+    bg="gray-700 hover:black"
+    text="white"
+    p="x-3 y-1"
+    font="bold"
+    cursor="pointer"
+    rounded="sm"
+    type="submit"
+    value="Create task"
+  />
+
 const NewTask: FunctionalComponent = () => {
   const { register, handleSubmit, reset } = useForm<NewTaskInputs>()
+  
   const create: SubmitHandler<NewTaskInputs> = async ({ name }) => {
-    await $fetch('/api/tasks', {
-      method: 'POST',
-      body: {
-        name,
-      },
-    })
-
+    await createTask({ name })
     mutate('/tasks')
     reset()
   }
@@ -51,16 +58,7 @@ const NewTask: FunctionalComponent = () => {
       placeholder="Use tiny-todo everyday!"
       {...register('name', { required: true })}
     />
-    <input
-      bg="gray-700 hover:black"
-      text="white"
-      p="x-3 y-1"
-      font="bold"
-      cursor="pointer"
-      rounded="sm"
-      type="submit"
-      value="Create task"
-    />
+    <SubmitBtn />
   </form>
 }
 

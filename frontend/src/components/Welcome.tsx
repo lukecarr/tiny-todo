@@ -1,4 +1,4 @@
-import { useLocalStorage } from 'hooks/local-storage'
+import { useLocalStorage } from 'src/hooks/local-storage'
 
 import type { FunctionalComponent } from 'preact'
 
