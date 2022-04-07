@@ -8,12 +8,43 @@ import (
 
 func Task(e *env.Env, r fiber.Router) {
 	r.Get("/", getAllTasks(e))
+	r.Get("/incomplete", getIncomplete(e))
+	r.Get("/complete", getComplete(e))
+
 	r.Post("/", createTask(e))
 }
 
 func getAllTasks(e *env.Env) func(*fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 		tasks, err := e.Services.Task.GetAll()
+
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(fiber.Map{
+			"tasks": tasks,
+		})
+	}
+}
+
+func getComplete(e *env.Env) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		tasks, err := e.Services.Task.GetComplete()
+
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(fiber.Map{
+			"tasks": tasks,
+		})
+	}
+}
+
+func getIncomplete(e *env.Env) func(*fiber.Ctx) error {
+	return func(c *fiber.Ctx) error {
+		tasks, err := e.Services.Task.GetIncomplete()
 
 		if err != nil {
 			return err
