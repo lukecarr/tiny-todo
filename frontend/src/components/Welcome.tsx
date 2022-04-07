@@ -7,9 +7,10 @@ const Welcome: FunctionalComponent = () => {
 
   if (hidden) return null
 
-  return <section m="b-8" p="2 l-3" border="gray-600 l-4" font="semibold" bg="gray-100">
-    <h3>Welcome to tiny-todo!</h3>
-    <p>A simple todo app that's: tiny 🐜, lightweight 🔦🏋️‍♀️, and performant ⚡. Built using Go &amp; Preact!</p>
+  return <section m="b-8" p="y-6 x-3" space="y-4" border="gray-600 l-4" bg="gray-100">
+    <h3 text="xl" font="bold">Welcome to tiny-todo!</h3>
+    <p>tiny-todo is a powerful task-management tapp (tiny-app), built using Go and Preact.</p>
+    <p font="semibold">To get started, create a new task below!</p>
     <button text="sm" font="semibold" underline="~ dotted hover:solid" onClick={() => setHidden(true)}>don't show again</button>
   </section>
 }
