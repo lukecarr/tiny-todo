@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"database/sql"
+
 	"github.com/lukecarr/tiny-todo/internal/db"
 	"github.com/lukecarr/x/osx"
 	"github.com/lukecarr/x/stringsx"
@@ -19,7 +21,13 @@ func MakeMigrateCmd() *cobra.Command {
 				log.Fatal().Str("Hint", "SQLITE_DB=tiny-todo.db ./tiny-todo migrate").Msg("Please supply an SQLite database path as an environment variable (SQLITE_DB)!")
 			}
 
-			n, err := db.Migrate(dsn)
+			conn, err := sql.Open("sqlite3", dsn)
+
+			if err != nil {
+				log.Fatal().Err(err).Msg("Failed to open SQLite connection!")
+			}
+
+			n, err := db.Migrate(conn)
 
 			if err != nil {
 				log.Fatal().Err(err).Msg("Could not perform migrations on database!")

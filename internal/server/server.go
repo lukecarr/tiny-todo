@@ -40,22 +40,30 @@ func New(dsn string) *Server {
 		Env:   env.New(),
 	}
 
-	if dsn == "" {
+	db, err := sql.New(dsn)
+
+	if err != nil {
+		log.Fatal().Err(err).Msg("Couldn't establish connection with SQLite!")
+	} else {
+		log.Debug().Msg("Established connection with SQLite!")
+	}
+
+	if dsn == sql.MEMORY_DSN {
 		// In-memory mode
 		log.Warn().
 			Str("Hint", "SQLITE_DB=todo.db ./tiny-todo serve").
 			Msg("Launching in in-memory mode as 'SQLITE_DB' environment variable wasn't set. Data will be lost on shutdown!")
 
-		srv.Env.Services = env.NewInMemoryServices()
-	} else {
-		db, err := sql.New(dsn)
+		n, err := sql.Migrate(db.Sqlx.DB)
 
 		if err != nil {
-			log.Fatal().Err(err).Msg("Couldn't establish connection with SQLite!")
+			log.Fatal().Err(err).Msg("Failed to perform migrations on in-memory database!")
+		} else {
+			log.Debug().Int("Applied", n).Msg("Successfully applied migrations to in-memory database!")
 		}
-
-		srv.Env.Services = env.NewSqlServices(db)
 	}
+
+	srv.Env.Services = env.NewSqlServices(db)
 
 	routes.Version(srv.Env, srv.Fiber.Group("/api/version"))
 	routes.Task(srv.Env, srv.Fiber.Group("/api/tasks"))

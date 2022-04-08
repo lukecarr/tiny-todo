@@ -3,7 +3,6 @@ package db
 import (
 	"database/sql"
 	"embed"
-	"log"
 
 	migrate "github.com/rubenv/sql-migrate"
 )
@@ -11,21 +10,7 @@ import (
 //go:embed migrations/*.sql
 var migrations embed.FS
 
-func Migrate(dsn string) (int, error) {
-	conn, err := sql.Open(DIALECT, dsn)
-
-	if err != nil {
-		return 0, err
-	}
-
-	defer func() {
-		if conn != nil {
-			if err := conn.Close(); err != nil {
-				log.Fatalf("Error encountered closing database connection: %s\n", err)
-			}
-		}
-	}()
-
+func Migrate(conn *sql.DB) (int, error) {
 	migrations := &migrate.EmbedFileSystemMigrationSource{
 		FileSystem: migrations,
 		Root:       "migrations",

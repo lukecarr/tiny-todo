@@ -19,6 +19,7 @@ func getAllTasks(e *env.Env) func(*fiber.Ctx) error {
 		tasks, err := e.Services.Task.GetAll()
 
 		if err != nil {
+			log.Error().Err(err).Send()
 			return err
 		}
 
