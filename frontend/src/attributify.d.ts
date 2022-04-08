@@ -1,7 +1,12 @@
-// eslint-disable-next-line no-unused-vars
-declare module JSX {
-  // eslint-disable-next-line no-unused-vars
-  export interface HTMLAttributes {
-    [key: string]: any;
+/* eslint-disable no-unused-vars */
+import { UtilityNames, VariantNames } from 'windicss/types/jsx'
+
+declare type FixedUtilityNames = UtilityNames | 'rounded'
+declare type AttributifyNames<Prefix extends string = ''> = `${Prefix}${FixedUtilityNames}` | `${Prefix}${VariantNames}` | `${Prefix}${VariantNames}:${FixedUtilityNames}`;
+interface AttributifyAttributes extends Partial<Record<AttributifyNames, string>> {}
+
+declare module 'preact' {
+  namespace JSX {
+    interface HTMLAttributes extends AttributifyAttributes {}
   }
 }
