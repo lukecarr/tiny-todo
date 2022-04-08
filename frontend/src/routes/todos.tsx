@@ -1,8 +1,10 @@
+import clsx from 'clsx'
 import { useEffect } from 'preact/hooks'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import useSWR, { mutate } from 'swr'
 
-import { createTask, Task } from 'src/lib/task'
+import { createTask, Task, TaskInput, TaskSchema } from 'src/lib/task'
 
 import type { FunctionalComponent } from 'preact'
 
@@ -17,10 +19,6 @@ const Tasks: FunctionalComponent = () => {
   </ul>
 }
 
-type NewTaskInputs = {
-  name: string
-}
-
 const SubmitBtn: FunctionalComponent = () => <input
     bg="gray-700 hover:black"
     text="white"
@@ -33,7 +31,9 @@ const SubmitBtn: FunctionalComponent = () => <input
   />
 
 const NewTask: FunctionalComponent = () => {
-  const { register, handleSubmit, reset } = useForm<NewTaskInputs>()
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<TaskInput>({
+    resolver: zodResolver(TaskSchema),
+  })
   
   /**
    * Attempts to create a new task, and then mutates the SWR cache and resets
@@ -41,7 +41,7 @@ const NewTask: FunctionalComponent = () => {
    * 
    * @param task The new task to create.
    */
-  const create: SubmitHandler<NewTaskInputs> = async ({ name }) => {
+  const create: SubmitHandler<TaskInput> = async ({ name }) => {
     try {
       await createTask({ name })
       mutate('/tasks')
@@ -55,14 +55,15 @@ const NewTask: FunctionalComponent = () => {
   return <form onSubmit={handleSubmit(create)} class="mb-8 space-y-4">
     <input
       block="~"
-      border="gray-200 focus:gray-400 1"
+      border={clsx(typeof errors.name === 'undefined' ? 'gray-200 focus:gray-400' : 'red-400 focus:red-600', '1')}
       w="full"
       p="x-4 y-2"
       rounded="sm"
       outline="focus:none"
       placeholder="Use tiny-todo everyday!"
-      {...register('name', { required: true })}
+      {...register('name')}
     />
+    {errors.name?.message && <p text="xs red-500" font="semibold">{errors.name.message}</p>}
     <SubmitBtn />
   </form>
 }

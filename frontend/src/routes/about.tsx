@@ -25,6 +25,7 @@ const About: FunctionalComponent = () => {
           <li>Styled with WindiCSS.</li>
           <li>Data fetching and caching: swr and ohmyfetch</li>
           <li>Form handling: react-hook-form</li>
+          <li>Validation: zod</li>
         </ul>
       </ul>
     </>
