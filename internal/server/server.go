@@ -48,11 +48,13 @@ func New(dsn string) *Server {
 		log.Debug().Msg("Established connection with SQLite!")
 	}
 
+	// In-memory mode
 	if dsn == sql.MEMORY_DSN {
-		// In-memory mode
-		log.Warn().
-			Str("Hint", "SQLITE_DB=todo.db ./tiny-todo serve").
-			Msg("Launching in in-memory mode as 'SQLITE_DB' environment variable wasn't set. Data will be lost on shutdown!")
+		if _, ok := os.LookupEnv("DISABLE_IN_MEMORY_WARN"); !ok {
+			log.Warn().
+				Str("Hint", "SQLITE_DB=todo.db ./tiny-todo serve").
+				Msg("Launching in in-memory mode as 'SQLITE_DB' environment variable wasn't set. Data will be lost on shutdown!")
+		}
 
 		n, err := sql.Migrate(db.Sqlx.DB)
 

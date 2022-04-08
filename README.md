@@ -74,6 +74,10 @@ Sets the level of logs that will be displayed when launching tiny-todo.
 
 By default, this is `info`. It can be one of `panic`, `fatal`, `error`, `warn`, `info`, `debug`, or `trace`.
 
+### `DISABLE_IN_MEMORY_WARN`
+
+Creating this environment variable (with any value) will disable the in-memory database warning message on startup.
+
 ## Examples
 
 We curate a multitude of examples for running tiny-todo in the [examples directory](examples)!
