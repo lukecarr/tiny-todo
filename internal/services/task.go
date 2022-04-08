@@ -1,11 +1,15 @@
 package services
 
 import (
+	"database/sql"
+	"errors"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/lukecarr/tiny-todo/internal/models"
 )
 
 type TaskService interface {
+	Get(id int) (*models.Task, error)
 	GetAll() ([]*models.Task, error)
 	GetIncomplete() ([]*models.Task, error)
 	GetComplete() ([]*models.Task, error)
@@ -14,6 +18,17 @@ type TaskService interface {
 
 type TaskServiceSql struct {
 	Sqlx *sqlx.DB
+}
+
+func (s TaskServiceSql) Get(id int) (*models.Task, error) {
+	var task models.Task
+	err := s.Sqlx.Get(&task, "SELECT * FROM \"task\" WHERE \"task\".\"id\" = $1", id)
+
+	if err != nil && errors.Is(err, sql.ErrNoRows) {
+		return nil, nil
+	}
+
+	return &task, err
 }
 
 func (s TaskServiceSql) GetAll() ([]*models.Task, error) {
